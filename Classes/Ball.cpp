@@ -8,6 +8,7 @@ Ball::Ball(Size windowSize)
 {
     maxLeft = windowSize.width / 3;
     maxRight = 2 * maxLeft;
+    setPosition(Vec2(windowSize.width / 2, windowSize.height / 15));
 
     centered = true;
     centerPos = getX();

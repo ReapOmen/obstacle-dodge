@@ -34,6 +34,8 @@ bool MainScene::init()
     ball = new Ball(visibleSize);
     moveRight = false;
 
+    paddle = new Paddle(visibleSize);
+
     EventListenerKeyboard *eventListener = EventListenerKeyboard::create();
 
     eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event) {
@@ -52,6 +54,8 @@ bool MainScene::init()
                             origin.y + visibleSize.height / 2 ));
 
     this->addChild(ball->getSprite());
+    this->addChild(paddle->getSprite());
+
     this->addChild(label);
 
     this->scheduleUpdate();

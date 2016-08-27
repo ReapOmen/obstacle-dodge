@@ -3,11 +3,14 @@
 
 #include "cocos2d.h"
 #include "Ball.h"
+#include "Paddle.h"
+
 
 class MainScene : public cocos2d::Layer
 {
 private:
     Ball *ball;
+    Paddle *paddle;
     bool moveRight, moveLeft;
     cocos2d::Label *label;
 public:

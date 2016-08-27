@@ -5,8 +5,6 @@ AbstractSprite::AbstractSprite(Size windowSize, std::string spritePath)
 {
     sprite = Sprite::create(spritePath);
     sprite->setScale(0.2);
-    sprite->setPosition(windowSize.width / 2,
-                        windowSize.height / 15);
 
     Rect box = sprite->getBoundingBox();
     width = box.getMaxX() - box.getMinX();

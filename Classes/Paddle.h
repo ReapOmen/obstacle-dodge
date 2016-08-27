@@ -6,7 +6,10 @@
 
 class Paddle : public AbstractSprite
 {
+public:
+    Paddle(cocos2d::Size windowSize);
 
+    virtual ~Paddle();
 };
 
 
