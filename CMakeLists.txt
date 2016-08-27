@@ -127,6 +127,7 @@ set(GAME_SRC
   Classes/MainScene.cpp
   Classes/Ball.cpp
   Classes/AbstractSprite.cpp
+  Classes/Paddle.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -135,6 +136,7 @@ set(GAME_HEADERS
   Classes/MainScene.h
   Classes/Ball.h
   Classes/AbstractSprite.h
+  Classes/Paddle.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
