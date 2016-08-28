@@ -4,15 +4,20 @@
 #include "cocos2d.h"
 #include "Ball.h"
 #include "Paddle.h"
+#include "Obstacle.h"
 
 
 class MainScene : public cocos2d::Layer
 {
 private:
     Ball *ball;
-    Paddle *paddle;
+
+    Obstacle *obstacle;
+
     bool moveRight, moveLeft;
+
     cocos2d::Label *label;
+
 public:
     static cocos2d::Scene* createScene();
 
