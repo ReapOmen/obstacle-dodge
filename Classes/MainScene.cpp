@@ -34,7 +34,7 @@ bool MainScene::init()
     ball = new Ball(visibleSize);
     moveRight = false;
 
-    paddle = new Paddle(visibleSize);
+    obstacle = new Obstacle(visibleSize, Obstacle::NO_MIDDLE);
 
     EventListenerKeyboard *eventListener = EventListenerKeyboard::create();
 
@@ -54,7 +54,13 @@ bool MainScene::init()
                             origin.y + visibleSize.height / 2 ));
 
     this->addChild(ball->getSprite());
-    this->addChild(paddle->getSprite());
+
+    std::vector<Paddle*> obs = obstacle->getPaddles();
+    for(int i = 0; i < obs.size(); ++i)
+    {
+        this->addChild(obs[i]->getSprite());
+    }
+
 
     this->addChild(label);
 
