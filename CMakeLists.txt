@@ -128,6 +128,7 @@ set(GAME_SRC
   Classes/Ball.cpp
   Classes/AbstractSprite.cpp
   Classes/Paddle.cpp
+  Classes/Obstacle.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -137,6 +138,7 @@ set(GAME_HEADERS
   Classes/Ball.h
   Classes/AbstractSprite.h
   Classes/Paddle.h
+  Classes/Obstacle.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
