@@ -3,6 +3,11 @@
 
 Obstacle::Obstacle(cocos2d::Size windowSize, int type)
 {
+    AbstractSprite *absSpr = new AbstractSprite(windowSize, "paddle.png");
+    height = absSpr->getHeight();
+    halvedHeight = absSpr->getHalvedHeight();
+    y = windowSize.height + halvedHeight;
+
     switch(type)
     {
         case NONE:
@@ -47,10 +52,32 @@ Obstacle::Obstacle(cocos2d::Size windowSize, int type)
 
 Obstacle::~Obstacle()
 {
-
+    paddles.erase(paddles.begin(), paddles.end());
 }
 
 std::vector<Paddle*> Obstacle::getPaddles() const
 {
     return paddles;
+}
+
+void Obstacle::update()
+{
+    y -= 10.0f;
+    for(Paddle *p : paddles)
+        p->update();
+}
+
+float Obstacle::getY() const
+{
+    return y;
+}
+
+float Obstacle::getHeight() const
+{
+    return height;
+}
+
+float Obstacle::getHalvedHeight() const
+{
+    return halvedHeight;
 }

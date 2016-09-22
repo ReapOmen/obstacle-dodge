@@ -12,11 +12,25 @@ class MainScene : public cocos2d::Layer
 private:
     Ball *ball;
 
-    Obstacle *obstacle;
+    std::vector<Obstacle*> obstacles;
+
+    Obstacle *first, *second, *third;
 
     bool moveRight, moveLeft;
 
+    float middleLine, bottomLine;
+
     cocos2d::Label *label;
+
+    void createSprites(cocos2d::Size visibleSize);
+
+    void addObstacle(Obstacle* obstacle);
+
+    void setEventListeners();
+
+    void handleBallMovement();
+
+    void handleObstacleMovement();
 
 public:
     static cocos2d::Scene* createScene();
