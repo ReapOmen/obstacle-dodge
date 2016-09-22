@@ -12,6 +12,8 @@ public:
     Paddle(cocos2d::Size windowSize, int type);
 
     virtual ~Paddle();
+
+    virtual void update();
 };
 
 
