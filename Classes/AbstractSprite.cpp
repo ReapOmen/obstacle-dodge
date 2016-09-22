@@ -15,7 +15,7 @@ AbstractSprite::AbstractSprite(Size windowSize, std::string spritePath)
 
 AbstractSprite::~AbstractSprite()
 {
-
+    delete sprite;
 }
 
 Sprite* AbstractSprite::getSprite() const
