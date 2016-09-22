@@ -1,7 +1,83 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
+#include <iostream>
+#include <cstdlib>
 
 USING_NS_CC;
+
+void MainScene::addObstacle(Obstacle* obstacle)
+{
+    std::vector<Paddle*> paddles = obstacle->getPaddles();
+    for(Paddle* paddle : paddles)
+    {
+        this->addChild(paddle->getSprite());
+    }
+}
+
+void MainScene::createSprites(Size visibleSize)
+{
+    ball = new Ball(visibleSize);
+    moveRight = moveLeft = false;
+    this->addChild(ball->getSprite());
+
+
+    first = new Obstacle(visibleSize, Obstacle::NO_MIDDLE);
+    this->addObstacle(first);
+    second = new Obstacle(visibleSize, Obstacle::NO_LEFT);
+    this->addObstacle(second);
+    third = new Obstacle(visibleSize, Obstacle::NO_RIGHT);
+    this->addObstacle(third);
+}
+
+void MainScene::setEventListeners()
+{
+    EventListenerKeyboard *eventListener = EventListenerKeyboard::create();
+
+    eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event) {
+        onKeyPressed(keyCode, event);
+    };
+    eventListener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event) {
+        onKeyReleased(keyCode, event);
+    };
+
+    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+}
+
+void MainScene::handleBallMovement()
+{
+    if(this->moveRight)
+    {
+        ball->moveRight();
+    }
+
+    if(this->moveLeft)
+    {
+        ball->moveLeft();
+    }
+
+    if(!moveLeft && !moveRight && !ball->isCentered())
+    {
+        ball->moveToCenter();
+    }
+}
+
+void MainScene::handleObstacleMovement()
+{
+    if(first->getY() <= middleLine)
+        second->update();
+
+    if(first->getY() >= bottomLine + first->getHalvedHeight())
+        first->update();
+    else
+    {
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        delete first;
+        first = second;
+        second = third;
+        third = new Obstacle(visibleSize, rand() % 6);
+        this->addObstacle(third);
+    }
+}
 
 Scene* MainScene::createScene()
 {
@@ -31,36 +107,19 @@ bool MainScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    ball = new Ball(visibleSize);
-    moveRight = false;
 
-    obstacle = new Obstacle(visibleSize, Obstacle::NO_MIDDLE);
+    middleLine = visibleSize.height / 2;
+    bottomLine = 0.0f;
 
-    EventListenerKeyboard *eventListener = EventListenerKeyboard::create();
+    createSprites(visibleSize);
 
-    eventListener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event* event) {
-        onKeyPressed(keyCode, event);
-    };
-    eventListener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event* event) {
-        onKeyReleased(keyCode, event);
-    };
-
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+    setEventListeners();
 
     this->label = Label::createWithTTF("", "fonts/arial.ttf", 24);
 
     // position the label on the center of the screen
     label->setPosition(Vec2(origin.x + visibleSize.width / 2,
                             origin.y + visibleSize.height / 2 ));
-
-    this->addChild(ball->getSprite());
-
-    std::vector<Paddle*> obs = obstacle->getPaddles();
-    for(int i = 0; i < obs.size(); ++i)
-    {
-        this->addChild(obs[i]->getSprite());
-    }
-
 
     this->addChild(label);
 
@@ -71,19 +130,9 @@ bool MainScene::init()
 
 void MainScene::update(float delta)
 {
-    if(this->moveRight)
-    {
-        ball->moveRight();
-    }
-    if(this->moveLeft)
-    {
-        ball->moveLeft();
-    }
-    if(!moveLeft && !moveRight && !ball->isCentered())
-    {
-        ball->moveToCenter();
-    }
+    handleBallMovement();
 
+    handleObstacleMovement();
 }
 
 void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
@@ -92,9 +141,11 @@ void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     {
         case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
             this->moveRight = true;
+            this->moveLeft = false;
             break;
         case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
             this->moveLeft = true;
+            this->moveRight = false;
             break;
     }
 }
