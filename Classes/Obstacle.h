@@ -6,16 +6,11 @@
 
 class Obstacle
 {
-private:
-    std::vector<Paddle*> paddles;
-
-    float y, height, halvedHeight;
-
 public:
     static const int NONE = 0, LEFT = 1, MIDDLE = 2, RIGHT = 3, \
                      NO_LEFT = 4, NO_MIDDLE = 5, NO_RIGHT = 6;
 
-    Obstacle(cocos2d::Size windowSize, int type);
+    Obstacle(int type);
 
     virtual ~Obstacle();
 
@@ -28,6 +23,11 @@ public:
     float getHeight() const;
 
     float getHalvedHeight() const;
+
+private:
+    std::vector<Paddle*> paddles;
+
+    float y, height, halvedHeight;
 };
 
 #endif // __OBSTACLE_H__

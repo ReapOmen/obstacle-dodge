@@ -1,12 +1,13 @@
 #include "Obstacle.h"
 #include "Paddle.h"
+#include "Globals.h"
 
-Obstacle::Obstacle(cocos2d::Size windowSize, int type)
+Obstacle::Obstacle(int type)
 {
-    AbstractSprite *absSpr = new AbstractSprite(windowSize, "paddle.png");
+    AbstractSprite *absSpr = new AbstractSprite("paddle.png");
     height = absSpr->getHeight();
     halvedHeight = absSpr->getHalvedHeight();
-    y = windowSize.height + halvedHeight;
+    y = Globals::screenSize.height + halvedHeight;
 
     switch(type)
     {
@@ -16,35 +17,35 @@ Obstacle::Obstacle(cocos2d::Size windowSize, int type)
         }
         case LEFT:
         {
-            paddles.push_back(new Paddle(windowSize, Paddle::LEFT));
+            paddles.push_back(new Paddle(Paddle::LEFT));
             break;
         }
         case MIDDLE:
         {
-            paddles.push_back(new Paddle(windowSize, Paddle::MIDDLE));
+            paddles.push_back(new Paddle(Paddle::MIDDLE));
             break;
         }
         case RIGHT:
         {
-            paddles.push_back(new Paddle(windowSize, Paddle::RIGHT));
+            paddles.push_back(new Paddle(Paddle::RIGHT));
             break;
         }
         case NO_LEFT:
         {
-            paddles.push_back(new Paddle(windowSize, Paddle::MIDDLE));
-            paddles.push_back(new Paddle(windowSize, Paddle::RIGHT));
+            paddles.push_back(new Paddle(Paddle::MIDDLE));
+            paddles.push_back(new Paddle(Paddle::RIGHT));
             break;
         }
         case NO_MIDDLE:
         {
-            paddles.push_back(new Paddle(windowSize, Paddle::LEFT));
-            paddles.push_back(new Paddle(windowSize, Paddle::RIGHT));
+            paddles.push_back(new Paddle(Paddle::LEFT));
+            paddles.push_back(new Paddle(Paddle::RIGHT));
             break;
         }
         case NO_RIGHT:
         {
-            paddles.push_back(new Paddle(windowSize, Paddle::LEFT));
-            paddles.push_back(new Paddle(windowSize, Paddle::MIDDLE));
+            paddles.push_back(new Paddle(Paddle::LEFT));
+            paddles.push_back(new Paddle(Paddle::MIDDLE));
             break;
         }
     };

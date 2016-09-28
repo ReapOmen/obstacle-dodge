@@ -7,13 +7,8 @@
 
 class Ball : public AbstractSprite
 {
-private:
-    float maxRight, maxLeft, centerPos;
-
-    bool centered;
-
 public:
-    Ball(cocos2d::Size windowSize);
+    Ball();
 
     virtual ~Ball();
 
@@ -24,5 +19,10 @@ public:
     virtual void moveToCenter();
 
     bool isCentered() const;
+
+private:
+    float maxRight_, maxLeft_, centerPos_;
+
+    bool isCentered_;
 };
 #endif // __BALL_H__

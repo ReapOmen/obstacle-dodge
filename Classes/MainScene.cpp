@@ -1,7 +1,9 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
+#include "Globals.h"
 #include <iostream>
 #include <cstdlib>
+#include <string>
 
 USING_NS_CC;
 
@@ -14,18 +16,18 @@ void MainScene::addObstacle(Obstacle* obstacle)
     }
 }
 
-void MainScene::createSprites(Size visibleSize)
+void MainScene::createSprites()
 {
-    ball = new Ball(visibleSize);
+    ball = new Ball();
     moveRight = moveLeft = false;
     this->addChild(ball->getSprite());
 
 
-    first = new Obstacle(visibleSize, Obstacle::NO_MIDDLE);
+    first = new Obstacle(Obstacle::NO_MIDDLE);
     this->addObstacle(first);
-    second = new Obstacle(visibleSize, Obstacle::NO_LEFT);
+    second = new Obstacle(Obstacle::NO_LEFT);
     this->addObstacle(second);
-    third = new Obstacle(visibleSize, Obstacle::NO_RIGHT);
+    third = new Obstacle(Obstacle::NO_RIGHT);
     this->addObstacle(third);
 }
 
@@ -70,11 +72,10 @@ void MainScene::handleObstacleMovement()
         first->update();
     else
     {
-        auto visibleSize = Director::getInstance()->getVisibleSize();
         delete first;
         first = second;
         second = third;
-        third = new Obstacle(visibleSize, rand() % 6);
+        third = new Obstacle(rand() % 6);
         this->addObstacle(third);
     }
 }
@@ -107,15 +108,16 @@ bool MainScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    Globals::init();
 
     middleLine = visibleSize.height / 2;
     bottomLine = 0.0f;
 
-    createSprites(visibleSize);
+    createSprites();
 
     setEventListeners();
 
-    this->label = Label::createWithTTF("", "fonts/arial.ttf", 24);
+    this->label = Label::createWithTTF(std::to_string(Globals::screenSize.height), "fonts/arial.ttf", 24);
 
     // position the label on the center of the screen
     label->setPosition(Vec2(origin.x + visibleSize.width / 2,
