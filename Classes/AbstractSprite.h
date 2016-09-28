@@ -5,13 +5,8 @@
 
 class AbstractSprite
 {
-private:
-    cocos2d::Sprite *sprite;
-
-    float width, height, halvedWidth, halvedHeight;
-
 public:
-    AbstractSprite(cocos2d::Size windowSize, std::string spritePath);
+    AbstractSprite(std::string spritePath);
 
     virtual ~AbstractSprite();
 
@@ -32,5 +27,11 @@ public:
     cocos2d::Vec2 getPosition() const;
 
     virtual void setPosition(cocos2d::Vec2 newPos);
+
+private:
+    cocos2d::Sprite *sprite_;
+
+    float width_, height_, halvedWidth_, halvedHeight_;
+
 };
 #endif // __ABSTRACT_SPRITE_H__

@@ -9,7 +9,7 @@ class Paddle : public AbstractSprite
 public:
     static const int LEFT = 0, MIDDLE = 1, RIGHT = 2;
 
-    Paddle(cocos2d::Size windowSize, int type);
+    Paddle(int type);
 
     virtual ~Paddle();
 

@@ -1,10 +1,13 @@
 #include "Paddle.h"
+#include "Globals.h"
 
 USING_NS_CC;
 
-Paddle::Paddle(Size windowSize, int type)
-: AbstractSprite::AbstractSprite(windowSize, "paddle.png")
+Paddle::Paddle(int type)
+: AbstractSprite::AbstractSprite("paddle.png")
 {
+    Size windowSize = Globals::screenSize;
+
     float offscreen_y = windowSize.height + getHalvedHeight();
 
     if(type == MIDDLE)

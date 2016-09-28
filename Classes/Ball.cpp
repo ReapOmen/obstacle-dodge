@@ -1,17 +1,19 @@
 #include "Ball.h"
 #include "AbstractSprite.h"
+#include "Globals.h"
 
 USING_NS_CC;
 
-Ball::Ball(Size windowSize)
-: AbstractSprite::AbstractSprite(windowSize, "ball.png")
+Ball::Ball()
+: AbstractSprite::AbstractSprite("ball.png")
 {
-    maxLeft = windowSize.width / 3;
-    maxRight = 2 * maxLeft;
+    Size windowSize = Globals::screenSize;
+    maxLeft_ = windowSize.width / 3;
+    maxRight_ = 2 * maxLeft_;
     setPosition(Vec2(windowSize.width / 2, windowSize.height / 15));
 
-    centered = true;
-    centerPos = getX();
+    isCentered_ = true;
+    centerPos_ = getX();
 }
 
 Ball::~Ball()
@@ -19,38 +21,38 @@ Ball::~Ball()
 
 }
 
-bool Ball::isCentered() const
-{
-    return centered;
-}
-
 void Ball::moveLeft()
 {
-    centered = false;
+    isCentered_ = false;
     Vec2 pos = getPosition();
     pos.x -= 10;
-    if(pos.x > maxLeft)
+    if(pos.x > maxLeft_)
         setPosition(pos);
 }
 
 void Ball::moveRight()
 {
-    centered = false;
+    isCentered_ = false;
     Vec2 pos = getPosition();
     pos.x += 10;
-    if(pos.x < maxRight)
+    if(pos.x < maxRight_)
         setPosition(pos);
 }
 
 void Ball::moveToCenter()
 {
     Vec2 pos = getPosition();
-    if(pos.x > centerPos)
+    if(pos.x > centerPos_)
         pos.x -= 10;
     else
-        if(pos.x < centerPos)
+        if(pos.x < centerPos_)
             pos.x += 10;
         else
-            centered = true;
+            isCentered_ = true;
     setPosition(pos);
+}
+
+bool Ball::isCentered() const
+{
+    return isCentered_;
 }

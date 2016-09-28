@@ -9,6 +9,16 @@
 
 class MainScene : public cocos2d::Layer
 {
+public:
+    static cocos2d::Scene* createScene();
+
+    virtual bool init();
+
+    virtual void update(float delta);
+
+    // implement the "static create()" method manually
+    CREATE_FUNC(MainScene);
+
 private:
     Ball *ball;
 
@@ -22,7 +32,7 @@ private:
 
     cocos2d::Label *label;
 
-    void createSprites(cocos2d::Size visibleSize);
+    void createSprites();
 
     void addObstacle(Obstacle* obstacle);
 
@@ -32,20 +42,9 @@ private:
 
     void handleObstacleMovement();
 
-public:
-    static cocos2d::Scene* createScene();
+    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
-    virtual bool init();
-
-    virtual void update(float delta);
-
-    // implement the "static create()" method manually
-    CREATE_FUNC(MainScene);
-
-    virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-
-    virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 };
 
 #endif // __HELLOWORLD_SCENE_H__
