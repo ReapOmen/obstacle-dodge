@@ -1,6 +1,7 @@
 #include "Obstacle.h"
 #include "Paddle.h"
 #include "Globals.h"
+#include <iostream>
 
 Obstacle::Obstacle(int type)
 {
@@ -53,7 +54,7 @@ Obstacle::Obstacle(int type)
 
 Obstacle::~Obstacle()
 {
-    paddles.erase(paddles.begin(), paddles.end());
+
 }
 
 std::vector<Paddle*> Obstacle::getPaddles() const

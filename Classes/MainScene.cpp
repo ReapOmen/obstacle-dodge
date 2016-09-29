@@ -68,7 +68,7 @@ void MainScene::handleObstacleMovement()
     if(first->getY() <= middleLine)
         second->update();
 
-    if(first->getY() >= bottomLine + first->getHalvedHeight())
+    if(first->getY() >= bottomLine - first->getHalvedHeight())
         first->update();
     else
     {
@@ -77,7 +77,26 @@ void MainScene::handleObstacleMovement()
         second = third;
         third = new Obstacle(rand() % 6);
         this->addObstacle(third);
+        score++;
+        label->setString("Score: " + std::to_string(score));
     }
+}
+
+bool MainScene::checkCollision()
+{
+    Rect ballRect = ball->getSprite()->getBoundingBox();
+    if(first->getY() - first->getHalvedHeight() <=
+        ball->getY() + ball->getHalvedHeight())
+    {
+        std::vector<Paddle*> paddles = first->getPaddles();
+        for(Paddle* p : paddles)
+        {
+            Rect paddleRect = p->getSprite()->getBoundingBox();
+            if(ballRect.intersectsRect(paddleRect))
+                return true;
+        }
+    }
+    return false;
 }
 
 Scene* MainScene::createScene()
@@ -112,16 +131,16 @@ bool MainScene::init()
 
     middleLine = visibleSize.height / 2;
     bottomLine = 0.0f;
+    score = 0;
 
     createSprites();
 
     setEventListeners();
 
-    this->label = Label::createWithTTF(std::to_string(Globals::screenSize.height), "fonts/arial.ttf", 24);
+    this->label = Label::createWithTTF("Score: " + std::to_string(score), "fonts/arial.ttf", 24);
 
-    // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-                            origin.y + visibleSize.height / 2 ));
+    label->setPosition(Vec2(origin.x + visibleSize.width - 70,
+                            origin.y + visibleSize.height - 15));
 
     this->addChild(label);
 
@@ -135,6 +154,12 @@ void MainScene::update(float delta)
     handleBallMovement();
 
     handleObstacleMovement();
+
+    if(checkCollision())
+    {
+        score = 0;
+        label->setString("Score: " + std::to_string(score));
+    }
 }
 
 void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
