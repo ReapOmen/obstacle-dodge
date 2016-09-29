@@ -22,6 +22,8 @@ public:
 private:
     Ball *ball;
 
+    int score;
+
     std::vector<Obstacle*> obstacles;
 
     Obstacle *first, *second, *third;
@@ -45,6 +47,8 @@ private:
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+
+    bool checkCollision();
 };
 
 #endif // __HELLOWORLD_SCENE_H__
