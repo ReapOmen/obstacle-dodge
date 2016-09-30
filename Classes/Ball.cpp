@@ -25,7 +25,7 @@ void Ball::moveLeft()
 {
     isCentered_ = false;
     Vec2 pos = getPosition();
-    pos.x -= 10;
+    pos.x -= Globals::ballSpeed;
     if(pos.x > maxLeft_)
         setPosition(pos);
 }
@@ -34,7 +34,7 @@ void Ball::moveRight()
 {
     isCentered_ = false;
     Vec2 pos = getPosition();
-    pos.x += 10;
+    pos.x += Globals::ballSpeed;
     if(pos.x < maxRight_)
         setPosition(pos);
 }
@@ -43,10 +43,10 @@ void Ball::moveToCenter()
 {
     Vec2 pos = getPosition();
     if(pos.x > centerPos_)
-        pos.x -= 10;
+        pos.x -= Globals::ballSpeed;
     else
         if(pos.x < centerPos_)
-            pos.x += 10;
+            pos.x += Globals::ballSpeed;
         else
             isCentered_ = true;
     setPosition(pos);
