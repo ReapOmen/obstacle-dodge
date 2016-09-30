@@ -1,10 +1,11 @@
 #include "AbstractSprite.h"
+#include "Globals.h"
 USING_NS_CC;
 
 AbstractSprite::AbstractSprite(std::string spritePath)
 {
     sprite_ = Sprite::create(spritePath);
-    sprite_->setScale(0.2);
+    sprite_->setScale(Globals::scaleObjects);
 
     Rect box = sprite_->getBoundingBox();
     width_ = box.getMaxX() - box.getMinX();
