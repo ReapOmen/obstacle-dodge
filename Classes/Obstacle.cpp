@@ -1,7 +1,6 @@
 #include "Obstacle.h"
 #include "Paddle.h"
 #include "Globals.h"
-#include <iostream>
 
 Obstacle::Obstacle(int type)
 {
@@ -64,9 +63,9 @@ std::vector<Paddle*> Obstacle::getPaddles() const
 
 void Obstacle::update()
 {
-    y -= 10.0f;
+    y -= Globals::paddleSpeed;
     for(Paddle *p : paddles)
-        p->update();
+        p->update(Globals::paddleSpeed);
 }
 
 float Obstacle::getY() const
