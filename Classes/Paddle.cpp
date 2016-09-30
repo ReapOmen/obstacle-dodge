@@ -34,8 +34,8 @@ Paddle::~Paddle()
 
 }
 
-void Paddle::update()
+void Paddle::update(float speed)
 {
     Vec2 pos = getPosition();
-    setPosition(Vec2(pos.x, pos.y - 10));
+    setPosition(Vec2(pos.x, pos.y - speed));
 }

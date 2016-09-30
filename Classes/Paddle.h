@@ -13,7 +13,7 @@ public:
 
     virtual ~Paddle();
 
-    virtual void update();
+    virtual void update(float speed);
 };
 
 
