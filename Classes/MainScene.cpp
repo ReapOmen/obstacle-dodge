@@ -127,8 +127,6 @@ bool MainScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    Globals::init();
-
     middleLine = visibleSize.height / 2;
     bottomLine = 0.0f;
     score = 0;
