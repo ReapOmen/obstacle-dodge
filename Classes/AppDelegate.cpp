@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "MainScene.h"
 #include "MainMenuScene.h"
+#include "Globals.h"
 
 USING_NS_CC;
 
@@ -73,6 +74,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     register_all_packages();
+
+    Globals::init();
 
     // create a scene. it's an autorelease object
     auto scene = MainMenuScene::createScene();
