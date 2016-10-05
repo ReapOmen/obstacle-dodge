@@ -20,6 +20,7 @@ void Globals::init()
     paddleHalvedHeight = paddle->getHalvedHeight();
     paddleY = paddle->getY();
     scaleObjects = (0.2 * screenSize.width) / 1024;
+    scaleButtons = (0.5 * screenSize.width) / 1024;
     ballSpeed = (10 * screenSize.width) / 1024;
     paddleSpeed = (10 * screenSize.height) / 768;
 }
