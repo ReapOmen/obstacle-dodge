@@ -24,7 +24,7 @@ Scene* MainMenuScene::createScene()
 bool MainMenuScene::init()
 {
     playButton = ui::Button::create("play.png", "play_selected.png");
-    playButton->setScale(0.6);
+    playButton->setScale(Globals::scaleButtons);
     Globals::init();
     Size screenSize = Globals::screenSize;
     playButton->setPosition(Vec2(screenSize.width / 2,
