@@ -25,9 +25,9 @@ public:
     float getHalvedHeight() const;
 
 private:
-    std::vector<Paddle*> paddles;
+    std::vector<Paddle*> paddles_;
 
-    float y, height, halvedHeight;
+    float y_, height_, halvedHeight_;
 };
 
 #endif // __OBSTACLE_H__
