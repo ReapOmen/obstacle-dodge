@@ -9,7 +9,7 @@ class Paddle : public AbstractSprite
 public:
     static const int LEFT = 0, MIDDLE = 1, RIGHT = 2;
 
-    Paddle(int type);
+    Paddle(const int type);
 
     virtual ~Paddle();
 
