@@ -13,9 +13,14 @@ public:
 
     CREATE_FUNC(MainMenuScene);
 
+    virtual ~MainMenuScene();
+
 private:
-    cocos2d::ui::Button *playButton;
-    void startMainScene(cocos2d::Ref *sender, cocos2d::ui::Widget::TouchEventType type);
+    cocos2d::MenuItemImage* playButton;
+    cocos2d::MenuItemImage* exitButton;
+
+    void startMainScene(cocos2d::Ref *sender);
+    void quit(cocos2d::Ref *sender);
 };
 
 #endif // __MAINMENUSCENE_H__
