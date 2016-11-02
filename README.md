@@ -7,10 +7,11 @@ Here is a short list of things implemented so far:
  * Moveable ball that centers itself 
  * Moving obstacles that fall towards the ball
  * Randomized obstacle creation
- * Collision detection which resets score
+ * Collision detection
+ * Main menu and Game over scenes
  
 TODO:  
- * Main menu screen
  * Pause screen
- * Game over screen
- * 
+ * Improve memory management
+ * Add background image
+ * Add sound effects
