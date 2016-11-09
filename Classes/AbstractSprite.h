@@ -6,7 +6,7 @@
 class AbstractSprite
 {
 public:
-    AbstractSprite(std::string spritePath);
+    AbstractSprite(const std::string& spritePath);
 
     virtual ~AbstractSprite();
 
@@ -26,10 +26,10 @@ public:
 
     cocos2d::Vec2 getPosition() const;
 
-    virtual void setPosition(cocos2d::Vec2 newPos);
+    virtual void setPosition(const cocos2d::Vec2& newPos);
 
 private:
-    cocos2d::Sprite *sprite_;
+    cocos2d::Sprite* sprite_;
 
     float width_, height_, halvedWidth_, halvedHeight_;
 

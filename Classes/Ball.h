@@ -12,11 +12,11 @@ public:
 
     virtual ~Ball();
 
-    virtual void moveLeft();
+    void moveLeft();
 
-    virtual void moveRight();
+    void moveRight();
 
-    virtual void moveToCenter();
+    void moveToCenter();
 
     bool isCentered() const;
 

@@ -1,5 +1,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
+#include "GameOverScene.h"
 #include "Globals.h"
 #include <iostream>
 #include <cstdlib>
@@ -18,17 +19,17 @@ void MainScene::addObstacle(Obstacle* obstacle)
 
 void MainScene::createSprites()
 {
-    ball = new Ball();
-    moveRight = moveLeft = false;
-    this->addChild(ball->getSprite());
+    ball_ = new Ball();
+    moveRight_ = moveLeft_ = false;
+    this->addChild(ball_->getSprite());
 
 
-    first = new Obstacle(Obstacle::NO_MIDDLE);
-    this->addObstacle(first);
-    second = new Obstacle(Obstacle::NO_LEFT);
-    this->addObstacle(second);
-    third = new Obstacle(Obstacle::NO_RIGHT);
-    this->addObstacle(third);
+    first_ = new Obstacle(Obstacle::NO_MIDDLE);
+    this->addObstacle(first_);
+    second_ = new Obstacle(Obstacle::NO_LEFT);
+    this->addObstacle(second_);
+    third_ = new Obstacle(Obstacle::NO_RIGHT);
+    this->addObstacle(third_);
 }
 
 void MainScene::setEventListeners()
@@ -47,48 +48,48 @@ void MainScene::setEventListeners()
 
 void MainScene::handleBallMovement()
 {
-    if(this->moveRight)
+    if(this->moveRight_)
     {
-        ball->moveRight();
+        ball_->moveRight();
     }
 
-    if(this->moveLeft)
+    if(this->moveLeft_)
     {
-        ball->moveLeft();
+        ball_->moveLeft();
     }
 
-    if(!moveLeft && !moveRight && !ball->isCentered())
+    if(!moveLeft_ && !moveRight_ && !ball_->isCentered())
     {
-        ball->moveToCenter();
+        ball_->moveToCenter();
     }
 }
 
 void MainScene::handleObstacleMovement()
 {
-    if(first->getY() <= middleLine)
-        second->update();
+    if(first_->getY() <= middleLine_)
+        second_->update();
 
-    if(first->getY() >= bottomLine - first->getHalvedHeight())
-        first->update();
+    if(first_->getY() >= bottomLine_ - first_->getHalvedHeight())
+        first_->update();
     else
     {
-        delete first;
-        first = second;
-        second = third;
-        third = new Obstacle(rand() % 6);
-        this->addObstacle(third);
+        CC_SAFE_DELETE(first_);
+        first_ = second_;
+        second_ = third_;
+        third_ = new Obstacle(rand() % 6);
+        this->addObstacle(third_);
         score++;
-        label->setString("Score: " + std::to_string(score));
+        label_->setString("Score: " + std::to_string(score));
     }
 }
 
 bool MainScene::checkCollision()
 {
-    Rect ballRect = ball->getSprite()->getBoundingBox();
-    if(first->getY() - first->getHalvedHeight() <=
-        ball->getY() + ball->getHalvedHeight())
+    Rect ballRect = ball_->getSprite()->getBoundingBox();
+    if(first_->getY() - first_->getHalvedHeight() <=
+        ball_->getY() + ball_->getHalvedHeight())
     {
-        std::vector<Paddle*> paddles = first->getPaddles();
+        std::vector<Paddle*> paddles = first_->getPaddles();
         for(Paddle* p : paddles)
         {
             Rect paddleRect = p->getSprite()->getBoundingBox();
@@ -118,7 +119,7 @@ Scene* MainScene::createScene()
 bool MainScene::init()
 {
     //////////////////////////////
-    // 1. super init first
+    // 1. super init first_
     if ( !Layer::init() )
     {
         return false;
@@ -127,22 +128,20 @@ bool MainScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    Globals::init();
-
-    middleLine = visibleSize.height / 2;
-    bottomLine = 0.0f;
+    middleLine_ = visibleSize.height / 2;
+    bottomLine_ = 0.0f;
     score = 0;
 
     createSprites();
 
     setEventListeners();
 
-    this->label = Label::createWithTTF("Score: " + std::to_string(score), "fonts/arial.ttf", 24);
+    this->label_ = Label::createWithTTF("Score: " + std::to_string(score), "fonts/arial.ttf", 24);
 
-    label->setPosition(Vec2(origin.x + visibleSize.width - 70,
+    label_->setPosition(Vec2(origin.x + visibleSize.width - 70,
                             origin.y + visibleSize.height - 15));
 
-    this->addChild(label);
+    this->addChild(label_);
 
     this->scheduleUpdate();
 
@@ -157,8 +156,8 @@ void MainScene::update(float delta)
 
     if(checkCollision())
     {
-        score = 0;
-        label->setString("Score: " + std::to_string(score));
+        auto scene = GameOverScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.3, scene, Color3B(255, 255, 255)));
     }
 }
 
@@ -167,12 +166,14 @@ void MainScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     switch(keyCode)
     {
         case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-            this->moveRight = true;
-            this->moveLeft = false;
+            this->moveRight_ = true;
+            this->moveLeft_ = false;
             break;
         case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-            this->moveLeft = true;
-            this->moveRight = false;
+            this->moveLeft_ = true;
+            this->moveRight_ = false;
+            break;
+        default:
             break;
     }
 }
@@ -182,10 +183,17 @@ void MainScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     switch(keyCode)
     {
         case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-            this->moveRight = false;
+            this->moveRight_ = false;
             break;
         case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-            this->moveLeft = false;
+            this->moveLeft_ = false;
+            break;
+        default:
             break;
     }
+}
+
+MainScene::~MainScene()
+{
+
 }

@@ -1,10 +1,12 @@
 #include "AbstractSprite.h"
+#include "Globals.h"
 USING_NS_CC;
 
-AbstractSprite::AbstractSprite(std::string spritePath)
+AbstractSprite::AbstractSprite(const std::string& spritePath)
+    :sprite_(Sprite::create(spritePath)), width_(0.0f), height_(0.0f),
+     halvedWidth_(0.0f), halvedHeight_(0.0f)
 {
-    sprite_ = Sprite::create(spritePath);
-    sprite_->setScale(0.2);
+    sprite_->setScale(Globals::scaleObjects);
 
     Rect box = sprite_->getBoundingBox();
     width_ = box.getMaxX() - box.getMinX();
@@ -58,7 +60,7 @@ Vec2 AbstractSprite::getPosition() const
     return sprite_->getPosition();
 }
 
-void AbstractSprite::setPosition(Vec2 newPos)
+void AbstractSprite::setPosition(const Vec2& newPos)
 {
     sprite_->setPosition(newPos);
 }

@@ -130,6 +130,8 @@ set(GAME_SRC
   Classes/Paddle.cpp
   Classes/Obstacle.cpp
   Classes/Globals.cpp
+  Classes/MainMenuScene.cpp
+  Classes/GameOverScene.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
@@ -141,6 +143,8 @@ set(GAME_HEADERS
   Classes/Paddle.h
   Classes/Obstacle.h
   Classes/Globals.h
+  Classes/MainMenuScene.h
+  Classes/GameOverScene.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

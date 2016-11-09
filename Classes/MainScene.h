@@ -5,6 +5,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include "Obstacle.h"
+#include "ui/CocosGUI.h"
 
 
 class MainScene : public cocos2d::Layer
@@ -19,20 +20,20 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 
+    virtual ~MainScene();
+
 private:
-    Ball *ball;
+    Ball* ball_;
 
     int score;
 
-    std::vector<Obstacle*> obstacles;
+    Obstacle* first_, *second_, *third_;
 
-    Obstacle *first, *second, *third;
+    bool moveRight_, moveLeft_;
 
-    bool moveRight, moveLeft;
+    float middleLine_, bottomLine_;
 
-    float middleLine, bottomLine;
-
-    cocos2d::Label *label;
+    cocos2d::Label* label_;
 
     void createSprites();
 
